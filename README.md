@@ -18,7 +18,7 @@ Este proyecto es una aplicación de escritorio en C que calcula el **Mínimo Com
 1. Asegúrate de tener instalado un compilador como MinGW.
 2. Abre una terminal y navega al directorio del proyecto:
    ```bash
-   cd "c:\Users\...\ProyectoLenguajes"
+   cd "c:\Users\...\MCM"
 3. Compila el programa con el siguiente comando:
     gcc gui.c -o gui.exe -lgdi32
 

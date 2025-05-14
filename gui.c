@@ -1,26 +1,10 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "back.c"
 
 HWND hNum1, hNum2, hResultado;
 
-// Función para calcular el MCD
-int calcularMCD(int a, int b) {
-    while (b != 0) {
-        int temp = b;
-        b = a % b;
-        a = temp;
-    }
-    return a;
-}
-
-// Función para calcular el MCM
-int calcularMCM(int a, int b) {
-    int mcd = calcularMCD(a, b);
-    return (a * b) / mcd;
-}
-
-// Función de manejo de eventos de la ventana
 LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     char buffer1[256], buffer2[256], result[256];
     int num1, num2, mcm;
@@ -63,7 +47,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
                     mcm = calcularMCM(num1, num2);
                     sprintf(result, "MCM: %d", mcm);
                 } else {
-                    sprintf(result, "Ingrese números válidos (> 0)");
+                    sprintf(result, "Ingrese numeros validos (> 0)");
                 }
                 SetWindowText(hResultado, result);
             }
