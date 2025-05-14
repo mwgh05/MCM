@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "back.c"
+#include "validate.c"
 
 HWND hNum1, hNum2, hResultado;
 
@@ -42,12 +42,11 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
                 GetWindowText(hNum2, buffer2, 256);
                 num1 = atoi(buffer1);
                 num2 = atoi(buffer2);
-
-                if (num1 > 0 && num2 > 0) {
-                    mcm = calcularMCM(num1, num2);
-                    sprintf(result, "MCM: %d", mcm);
-                } else {
+                mcm = processMCM(num1, num2, result);
+                if (mcm == -1) {
                     sprintf(result, "Ingrese numeros validos (> 0)");
+                } else {
+                    sprintf(result, "MCM: %d", mcm);
                 }
                 SetWindowText(hResultado, result);
             }
