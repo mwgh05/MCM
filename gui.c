@@ -9,33 +9,42 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     char buffer1[256], buffer2[256], result[256];
     int num1, num2, mcm;
 
-    switch(msg) {
-        case WM_CREATE:
+    switch (msg) {
+        case WM_CREATE: {
             RECT rect;
-            GetClientRect(hwnd, &rect); 
+            GetClientRect(hwnd, &rect);
 
             int windowWidth = rect.right - rect.left;
             int windowHeight = rect.bottom - rect.top;
 
-            CreateWindow("STATIC", "Ingrese dos numeros enteros", WS_VISIBLE | WS_CHILD,
-                ((windowWidth - 200) / 2), 20, 200, 20, hwnd, NULL, NULL, NULL);    
+            // Title
+            CreateWindow("STATIC", "Calculadora de MCM", WS_VISIBLE | WS_CHILD | SS_CENTER,
+                         0, 10, windowWidth, 30, hwnd, NULL, NULL, NULL);
+
+            // Input labels and fields
             CreateWindow("STATIC", "Numero 1:", WS_VISIBLE | WS_CHILD,
-                         20, 50, 80, 20, hwnd, NULL, NULL, NULL);
-            hNum1 = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER,
-                         100, 50, 100, 20, hwnd, NULL, NULL, NULL);
+                         20, 60, 80, 20, hwnd, NULL, NULL, NULL);
+            hNum1 = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_CENTER,
+                         110, 60, 150, 25, hwnd, NULL, NULL, NULL);
 
             CreateWindow("STATIC", "Numero 2:", WS_VISIBLE | WS_CHILD,
-                         20, 80, 80, 20, hwnd, NULL, NULL, NULL);
-            hNum2 = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER,
-                         100, 80, 100, 20, hwnd, NULL, NULL, NULL);
+                         20, 100, 80, 20, hwnd, NULL, NULL, NULL);
+            hNum2 = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_CENTER,
+                         110, 100, 150, 25, hwnd, NULL, NULL, NULL);
 
-            CreateWindow("BUTTON", "Calcular MCM", WS_VISIBLE | WS_CHILD,
-                         ((windowWidth-120)/2), 120, 120, 25, hwnd, (HMENU) 1, NULL, NULL);
+            // Button
+            CreateWindow("BUTTON", "Calcular MCM", WS_VISIBLE | WS_CHILD | BS_CENTER | BS_PUSHBUTTON,
+                         (windowWidth - 150) / 2, 150, 150, 30, hwnd, (HMENU)1, NULL, NULL);
 
-            hResultado = CreateWindow("STATIC", "", WS_VISIBLE | WS_CHILD,
-                         20, 150, 250, 20, hwnd, NULL, NULL, NULL);
+            // Result display
+            hResultado = CreateWindow("STATIC", "", WS_VISIBLE | WS_CHILD | SS_CENTER | WS_BORDER,
+                         20, 200, windowWidth - 40, 30, hwnd, NULL, NULL, NULL);
+
+            // Background color
+            HBRUSH hBrush = CreateSolidBrush(RGB(240, 240, 240));
+            SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hBrush);
             break;
-
+        }
         case WM_COMMAND:
             if (LOWORD(wParam) == 1) {
                 GetWindowText(hNum1, buffer1, 256);
@@ -75,7 +84,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
         return -1;
 
     CreateWindowW(L"mcmWindow", L"Calculadora MCM", WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-                  100, 100, 300, 230, NULL, NULL, NULL, NULL);
+                  100, 100, 400, 300, NULL, NULL, NULL, NULL);
 
     MSG msg = {0};
 
