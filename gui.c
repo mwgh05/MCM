@@ -49,14 +49,18 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             if (LOWORD(wParam) == 1) {
                 GetWindowText(hNum1, buffer1, 256);
                 GetWindowText(hNum2, buffer2, 256);
-                num1 = atoi(buffer1);
-                num2 = atoi(buffer2);
-                mcm = processMCM(num1, num2, result);
-                if (mcm == -1) {
-                    sprintf(result, "Ingrese numeros validos (> 0)");
+                mcm = processMCM(buffer1, buffer2, result);
+
+                if (mcm == -3) {
+                    sprintf(result, "Error: No deje espacios vacíos.");
+                } else if (mcm == -2) {
+                    sprintf(result, "Error: Ingrese solo números válidos.");
+                } else if (mcm == -1) {
+                    sprintf(result, "Ingrese numeros mayores a cero.");
                 } else {
                     sprintf(result, "MCM: %d", mcm);
                 }
+
                 SetWindowText(hResultado, result);
             }
             break;
